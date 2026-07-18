@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Ascent to the Stars</title>
+<meta name="description" content="Ascent to the Stars — a xianxia cultivation incremental. Mortal clay, endless heavens.">
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0b12; color: #9aa3b2;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { height: 100%; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 0.55rem; text-align: center; padding: 1rem; }
+  .title { color: #c9b97a; font-size: 1.15rem; letter-spacing: 0.05em; }
+  .sub { font-size: 0.85rem; opacity: 0.7; }
+  a { color: #c9b97a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">Ascent to the Stars</div>
+  <div class="sub" id="status">Drawing down the latest heavens&hellip;</div>
+</div>
+<script>
+// WEB LOADER (deployed to the ascendtothestars.github.io org repo — source of truth lives in the main
+// repo at web/loader.html). Same pattern as the desktop Tauri loader: this page is a stable shell that
+// fetches the CURRENT game from the public mirror at load and runs it IN PLACE via document.write, so
+// the player's origin (and localStorage saves) stay on ascendtothestars.github.io while the game itself
+// updates on every CI mirror push with no deploy to this repo, ever.
+// Freshest first (raw, ~5 min cache), mirror Pages second (~10 min cache); both send CORS '*'.
+(function () {
+  var SOURCES = [
+    'https://raw.githubusercontent.com/silvariasereneblossom/ascent-to-the-stars-releases/main/index.html',
+    'https://silvariasereneblossom.github.io/ascent-to-the-stars-releases/index.html',
+  ];
+  var TIMEOUT_MS = 12000;
+  var statusEl = document.getElementById('status');
+
+  // document.open/write/close re-parses a full HTML doc and EXECUTES its inline scripts, same origin.
+  function run(html) {
+    html = html.replace(/__BUILD_SHA__/g, 'web');
+    document.open(); document.write(html); document.close();
+  }
+  function attempt(i) {
+    if (i >= SOURCES.length) {
+      if (statusEl) statusEl.innerHTML = 'Could not reach the heavens. Check your connection and refresh.';
+      return;
+    }
+    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
+    fetch(SOURCES[i], { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+      .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
+      .then(function (html) {
+        clearTimeout(timer);
+        if (html.indexOf('GAME_VERSION') === -1) throw new Error('unexpected content');
+        run(html);
+      })
+      .catch(function () { clearTimeout(timer); attempt(i + 1); });
+  }
+  attempt(0);
+})();
+</script>
+</body>
+</html>
