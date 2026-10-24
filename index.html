@@ -2,62 +2,254 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Ascent to the Stars</title>
-<meta name="description" content="Ascent to the Stars — a xianxia cultivation incremental. Mortal clay, endless heavens.">
-<style>
-  html, body { margin: 0; height: 100%; background: #0b0b12; color: #9aa3b2;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-  .wrap { height: 100%; display: flex; flex-direction: column; align-items: center;
-    justify-content: center; gap: 0.55rem; text-align: center; padding: 1rem; }
-  .title { color: #c9b97a; font-size: 1.15rem; letter-spacing: 0.05em; }
-  .sub { font-size: 0.85rem; opacity: 0.7; }
-  a { color: #c9b97a; }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ascent to the Stars: a xianxia cultivation incremental</title>
+<meta name="description" content="Ascent to the Stars is a xianxia cultivation incremental game. Start as mortal clay, climb the realms layer by layer, and survive the heavens' tribulations. Play in your browser, or install it on Android or Windows.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0a0d18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f1e5" media="(prefers-color-scheme: light)">
+<link rel="canonical" href="https://ascenttothestars.github.io/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ascent to the Stars">
+<meta property="og:url" content="https://ascenttothestars.github.io/">
+<meta property="og:title" content="Ascent to the Stars">
+<meta property="og:description" content="A xianxia cultivation incremental. Mortal clay, endless heavens. Play in your browser, or on Android and Windows.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ascent to the Stars">
+<meta name="twitter:description" content="A xianxia cultivation incremental. Mortal clay, endless heavens. Play in your browser, or on Android and Windows.">
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<div class="wrap">
-  <div class="title">Ascent to the Stars</div>
-  <div class="sub" id="status">Drawing down the latest heavens&hellip;</div>
-</div>
-<script>
-// WEB LOADER (deployed to the ascenttothestars.github.io org repo — source of truth lives in the main
-// repo at web/loader.html). Same pattern as the desktop Tauri loader: this page is a stable shell that
-// fetches the CURRENT game from the public mirror at load and runs it IN PLACE via document.write, so
-// the player's origin (and localStorage saves) stay on ascenttothestars.github.io while the game itself
-// updates on every CI mirror push with no deploy to this repo, ever.
-// Freshest first (raw, ~5 min cache), mirror Pages second (~10 min cache); both send CORS '*'.
-(function () {
-  var SOURCES = [
-    'https://raw.githubusercontent.com/silvariasereneblossom/ascent-to-the-stars-releases/main/index.html',
-    'https://silvariasereneblossom.github.io/ascent-to-the-stars-releases/index.html',
-  ];
-  var TIMEOUT_MS = 12000;
-  var statusEl = document.getElementById('status');
+<a class="skip" href="#main">Skip to content</a>
 
-  // document.open/write/close re-parses a full HTML doc and EXECUTES its inline scripts, same origin.
-  function run(html) {
-    html = html.replace(/__BUILD_SHA__/g, 'web');
-    document.open(); document.write(html); document.close();
-  }
-  function attempt(i) {
-    if (i >= SOURCES.length) {
-      if (statusEl) statusEl.innerHTML = 'Could not reach the heavens. Check your connection and refresh.';
-      return;
-    }
-    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
-    fetch(SOURCES[i], { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
-      .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); return res.text(); })
-      .then(function (html) {
-        clearTimeout(timer);
-        if (html.indexOf('GAME_VERSION') === -1) throw new Error('unexpected content');
-        run(html);
-      })
-      .catch(function () { clearTimeout(timer); attempt(i + 1); });
-  }
-  attempt(0);
-})();
-</script>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Ascent to the Stars, home">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <path d="M6 54 L22 32 L30 42 L40 24 L58 54 Z" fill="#2d6b59"/>
+        <path d="M32 6 L34.6 14.4 L43 17 L34.6 19.6 L32 28 L29.4 19.6 L21 17 L29.4 14.4 Z" fill="#e2c46e"/>
+      </svg>
+      <span>Ascent to the Stars</span>
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <ul>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#about">The game</a></li>
+        <li><a href="#already-playing">Already playing?</a></li>
+        <li><a href="#links">Wiki &amp; credits</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="title">
+    <div class="hero-moon" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <p class="eyebrow">A xianxia cultivation incremental</p>
+        <h1 id="title">Ascent to the Stars <span class="zh" lang="zh-Hans">步步登天</span></h1>
+        <p class="pitch">Begin as mortal clay with a rolled fate and a handful of stat points. Cultivate layer by layer, break the bosses that guard each realm, and outlast the tribulations the heavens send to stop you.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-big" href="/game/">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+            Play in your browser
+          </a>
+          <a class="btn btn-ghost" href="#download">Android &amp; Windows</a>
+        </div>
+        <p class="hero-note">Nothing to install. The browser version always runs the newest build, and your saves stay on your device.</p>
+      </div>
+    </div>
+    <svg class="ridges" viewBox="0 0 1440 240" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path class="far" d="M0 150 L90 118 L170 136 L260 84 L330 110 L420 62 L520 120 L600 98 L690 132 L780 70 L860 104 L950 46 L1040 112 L1120 90 L1210 128 L1300 80 L1380 108 L1440 96 L1440 240 L0 240 Z"/>
+      <path class="mist" d="M0 168 C240 140 420 186 720 160 C1000 136 1200 182 1440 156 L1440 240 L0 240 Z"/>
+      <path class="mid" d="M0 190 L120 150 L210 176 L330 128 L440 178 L560 146 L650 182 L770 136 L880 172 L990 120 L1100 170 L1220 140 L1330 176 L1440 150 L1440 240 L0 240 Z"/>
+      <path class="near" d="M0 222 C180 204 330 230 520 214 C720 198 900 228 1100 210 C1250 198 1360 214 1440 206 L1440 240 L0 240 Z"/>
+    </svg>
+  </section>
+
+  <section id="download" aria-labelledby="download-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="download-title">Download <span class="zh" lang="zh-Hans">下载</span></h2>
+        <p class="lede">The same game runs everywhere, and every version updates itself. Install once and you rarely need to come back here.</p>
+      </div>
+      <ul class="downloads">
+        <li class="card">
+          <div class="card-top">
+            <span class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm0 3v13h10V5H7Zm5 14.25a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg>
+            </span>
+            <div>
+              <h3>Android</h3>
+              <p class="meta">APK · Android 5.0 or newer</p>
+            </div>
+          </div>
+          <p>A light app around the game. After the first install it checks for updates when you open it and offers the new version when it's ready. Your save survives every update.</p>
+          <p class="warn">Android may ask you to allow installing apps from your browser. Allow it for this install.</p>
+          <a class="btn btn-primary" href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest/download/AscentToTheStars.apk">Download APK</a>
+        </li>
+        <li class="card">
+          <div class="card-top">
+            <span class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 5.4 10.2 4.4v7H3V5.4Zm8.2-1.1L21 3v8.4h-9.8V4.3ZM3 12.6h7.2v7L3 18.6v-6Zm8.2 0H21V21l-9.8-1.3v-7.1Z"/></svg>
+            </span>
+            <div>
+              <h3>Windows installer</h3>
+              <p class="meta">Setup .exe · recommended for Windows</p>
+            </div>
+          </div>
+          <p>A small download, because it uses the webview built into Windows. Each launch pulls the latest game, with a bundled copy for when you're offline.</p>
+          <p class="warn">Windows SmartScreen may warn you because the installer isn't code-signed. Choose <span class="kbd">More info</span> then <span class="kbd">Run anyway</span>.</p>
+          <a class="btn btn-primary" href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest/download/AscentToTheStars-Setup.exe">Download .exe</a>
+        </li>
+        <li class="card">
+          <div class="card-top">
+            <span class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h9l5 5v13H5V3Zm8 1.5V9h4.5L13 4.5ZM8 13h8v1.6H8V13Zm0 3.2h8v1.6H8v-1.6Z"/></svg>
+            </span>
+            <div>
+              <h3>Windows .msi</h3>
+              <p class="meta">MSI package · same app</p>
+            </div>
+          </div>
+          <p>The same Windows app as an MSI package, if you prefer MSI or manage installs that way. It updates the game the same way.</p>
+          <p class="warn">The same SmartScreen note applies: <span class="kbd">More info</span> then <span class="kbd">Run anyway</span>.</p>
+          <a class="btn btn-ghost" href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest/download/AscentToTheStars.msi">Download .msi</a>
+        </li>
+      </ul>
+      <p class="below-cards">Links always point at the newest build. Every file is also listed on the <a href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest">release page</a>.</p>
+    </div>
+  </section>
+
+  <section id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="about-title">What is it? <span class="zh" lang="zh-Hans">修仙</span></h2>
+        <p class="lede">An incremental game about a cultivator's long climb. Breakthroughs never fail, so the walls you meet are the bosses, the tribulations and your own lifespan.</p>
+      </div>
+      <ul class="features">
+        <li>
+          <h3>A fate, then a childhood</h3>
+          <p>Each life starts by rolling your stats, spirit root and heritage, then tells three childhood story beats around what you rolled. Your choices are permanent and follow you through death.</p>
+        </li>
+        <li>
+          <h3>Fifteen schools</h3>
+          <p>From the Azure Sword Sect to Demon Heart Palace, each school sets your weapon, five starting techniques, an always-on kit and your primary element.</p>
+        </li>
+        <li>
+          <h3>The Five Elements</h3>
+          <p>Metal, Wood, Water, Fire and Earth overcome one another in a cycle. Cultivating an element grants its kit and signature, and specializing is a bet.</p>
+        </li>
+        <li>
+          <h3>Bosses, Heavenscourge, Calamity</h3>
+          <p>Fourteen named bosses are anchored to their realms, each with its own spoils and its own composed theme. Each has two harder forms: Heavenscourge, and once that falls, Calamity.</p>
+        </li>
+        <li>
+          <h3>Righteous or demonic</h3>
+          <p>The righteous road is steady and keeps cultivating in seclusion while you're away. The demonic road is faster and stronger, and brings a tribulation at every breakthrough and hunters at your door.</p>
+        </li>
+        <li>
+          <h3>A life beyond the battle</h3>
+          <p>Forge your realm's gear and chase armor sets, tend a garden that grows while you're offline, trade with the market caravan, and rise through your sect in promotion duels.</p>
+        </li>
+      </ul>
+      <div class="realms">
+        <p class="caption" id="realms-caption">The cultivation ladder <span class="zh" lang="zh-Hans">境界</span></p>
+        <ol aria-labelledby="realms-caption">
+        <li>Mortal <span class="zh" lang="zh-Hans">凡人</span></li>
+        <li>Qi Condensation <span class="zh" lang="zh-Hans">炼气</span></li>
+        <li>Foundation Establishment <span class="zh" lang="zh-Hans">筑基</span></li>
+        <li>Core Formation <span class="zh" lang="zh-Hans">结丹</span></li>
+        <li>Golden Core <span class="zh" lang="zh-Hans">金丹</span></li>
+        <li>Nascent Soul <span class="zh" lang="zh-Hans">元婴</span></li>
+        <li>Spirit Severing <span class="zh" lang="zh-Hans">化神</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="cloud" aria-labelledby="cloud-title">
+    <div class="wrap">
+      <div class="callout">
+        <h2 id="cloud-title">Cloud saves</h2>
+        <p>Cloud saves are still being scoped and will come later; for now every save lives on the device you play on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="already-playing" aria-labelledby="already-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="already-title">Already playing?</h2>
+        <p class="lede">Browsers keep saves per web address, so where you played decides where your cultivator lives.</p>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>The old address still works</h3>
+          <p>The game's original page at <a class="url" href="https://silvariasereneblossom.github.io/ascent-to-the-stars-releases/">silvariasereneblossom.github.io/ascent-to-the-stars-releases</a> keeps working, with its own saves. A save made there won't appear here on its own, and nothing you do here touches it.</p>
+          <p>If you played at <span class="url">ascenttothestars.github.io</span> before the game moved to <a href="/game/">/game/</a>, your saves are already here: it's the same address, so they carry over.</p>
+          <p class="small">The Android and Windows apps keep their saves inside the app.</p>
+        </div>
+        <div>
+          <h3>Move a save with a Cultivator Snapshot</h3>
+          <ol class="steps">
+            <li>Where your save is now, open the <span class="kbd">Config</span> tab and find <strong>Cultivator Snapshot</strong>. Choose <span class="kbd">Copy Snapshot</span>, or <span class="kbd">Save as File</span>.</li>
+            <li>Open the game where you want to play, go to <span class="kbd">Config</span>, then <strong>Load / Transfer a Save</strong>.</li>
+            <li>Paste the snapshot and press <span class="kbd">Load Save</span> (or use <span class="kbd">Load from File</span>), then tap once more to confirm.</li>
+          </ol>
+          <p class="small">The snapshot replaces the cultivator in the active save slot, so export that one first if you want to keep it. Souls and prestige come across; this device's own settings stay as they are. It moves one slot at a time, and works between the browser and the apps. Where a file option isn't available, copy and paste the text instead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="links" aria-labelledby="links-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="links-title">Wiki, releases &amp; credits</h2>
+        <p class="lede">The wiki's reference pages are generated from the game's own data tables each release, so the numbers there are the numbers the game runs.</p>
+      </div>
+      <ul class="link-list">
+        <li><a class="btn btn-ghost" href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/wiki">Wiki</a></li>
+        <li><a class="btn btn-ghost" href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/wiki/Getting-Started">Getting started</a></li>
+        <li><a class="btn btn-ghost" href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/wiki/Changelog">Changelog</a></li>
+        <li><a class="btn btn-ghost" href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest">Releases</a></li>
+      </ul>
+
+      <h3 id="credits" style="margin-top:2.6rem">Music credits</h3>
+      <p class="small">The music changes with what you're doing: title, menus, market, battle, bosses and tribulations. The full track-by-track attribution is in the game's <span class="kbd">Config</span> panel.</p>
+      <details class="credits">
+        <summary>Composers, sources and licenses</summary>
+        <ul>
+          <li><strong>Original score.</strong> Eight battle tracks, four boss tracks and the three themes of every named boss were composed for the game and played on sample libraries: VSCO 2 Community Edition and VCSL by Versilian Studios (CC0), and the chorus of the <a href="https://github.com/peastman/sso">Sonatina Symphonic Orchestra</a> by Mattias Westlund (CC Sampling Plus 1.0).</li>
+          <li><strong>PeriTune</strong> (<a href="https://peritune.com">peritune.com</a>): Shenxian, Taohua, Chinatown (Healing), Wuxia, Wuxia II, Wuxia III. CC BY 4.0.</li>
+          <li><strong>Kevin MacLeod</strong> (<a href="https://incompetech.com">incompetech.com</a>): Shenyang, Guzheng City, Crusade (Heavy Industry), Achaidh Cheide, Clenched Teeth. CC BY 3.0 / 4.0.</li>
+          <li><strong>Scott Buckley</strong> (<a href="https://www.scottbuckley.com.au">scottbuckley.com.au</a>): Into the Wilds, Song of the Forge, Aphelion. CC BY 4.0.</li>
+          <li><strong>Zhang Peijian</strong>, via Wikimedia Commons: <span lang="zh-Hans">雨打芭蕉</span> Rain on Banana Leaves, <span lang="zh-Hans">连环扣</span> Interlocking Rings, <span lang="zh-Hans">二泉映月</span> Moon Over Second Spring. CC BY-SA 4.0.</li>
+          <li><strong>Shane Ivers / Silverman Sound</strong> (<a href="https://www.silvermansound.com">silvermansound.com</a>): All The Tea In China, Imperial China Cinematic. CC BY 4.0.</li>
+          <li><strong>Alex-Productions</strong> (<a href="https://onsound.eu/">onsound.eu</a>), via <a href="https://www.free-stock-music.com">Free Stock Music</a>: Lunar New Year. CC BY 3.0.</li>
+          <li><strong>FSM Team</strong>, <a href="https://www.free-stock-music.com">Free Stock Music</a>: Asia. CC BY 4.0.</li>
+          <li><strong>John Bartmann</strong> (<a href="https://johnbartmann.com">johnbartmann.com</a>): Long Way To Kunming, the title theme. CC0.</li>
+        </ul>
+        <p class="small">License deeds: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Third-party tracks are used unmodified.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Ascent to the Stars <span lang="zh-Hans">步步登天</span></p>
+    <ul>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="#download">Download</a></li>
+      <li><a href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/wiki">Wiki</a></li>
+      <li><a href="#credits">Credits</a></li>
+    </ul>
+    <p class="small">This page sets no cookies and runs no trackers.</p>
+  </div>
+</footer>
 </body>
 </html>
