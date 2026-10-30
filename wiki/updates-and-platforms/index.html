@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Updates and Platforms · Ascent to the Stars wiki</title>
+<meta name="description" content="The game is one file. Every platform runs the same build and updates itself.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0a0d18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f1e5" media="(prefers-color-scheme: light)">
+<link rel="canonical" href="https://ascenttothestars.github.io/wiki/updates-and-platforms/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ascent to the Stars">
+<meta property="og:url" content="https://ascenttothestars.github.io/wiki/updates-and-platforms/">
+<meta property="og:title" content="Updates and Platforms · Ascent to the Stars wiki">
+<meta property="og:description" content="The game is one file. Every platform runs the same build and updates itself.">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/wiki.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header wiki-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Ascent to the Stars, home">
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <path d="M6 54 L22 32 L30 42 L40 24 L58 54 Z" fill="#2d6b59"/>
+        <path d="M32 6 L34.6 14.4 L43 17 L34.6 19.6 L32 28 L29.4 19.6 L21 17 L29.4 14.4 Z" fill="#e2c46e"/>
+      </svg>
+      <span>Ascent to the Stars</span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <ul>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/#download">Download</a></li>
+        <li><a href="/wiki/">Wiki</a></li>
+        <li><a href="/wiki/changelog/">Changelog</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap wiki-layout">
+  <nav class="wiki-nav" aria-label="Wiki pages">
+    <details open>
+      <summary>Wiki pages</summary>
+      <ul><li><a href="/wiki/">Home</a></li></ul>
+<p class="wiki-nav-group">Getting Started</p>
+<ul><li><a href="/wiki/getting-started/">Getting Started</a></li><li><a href="/wiki/updates-and-platforms/" aria-current="page">Updates and Platforms</a></li></ul>
+<p class="wiki-nav-group">Guides</p>
+<ul><li><a href="/wiki/paths/">Paths</a></li></ul>
+<p class="wiki-nav-group">Reference <span>(generated)</span></p>
+<ul><li><a href="/wiki/realms/">Realms</a></li><li><a href="/wiki/schools/">Schools</a></li><li><a href="/wiki/five-elements/">Five Elements</a></li><li><a href="/wiki/armor-sets/">Armor Sets</a></li><li><a href="/wiki/bosses/">Bosses</a></li></ul>
+<p class="wiki-nav-group">Tracking</p>
+<ul><li><a href="/wiki/changelog/">Changelog</a></li></ul>
+    </details>
+  </nav>
+  <script>if (!matchMedia('(min-width: 900px)').matches) document.querySelector('.wiki-nav details').open = false;</script>
+  <main id="main" class="wiki">
+    
+    <h1 id="updates-and-platforms">Updates and Platforms</h1>
+<p>The game is one file. Every platform runs the same build and updates itself.</p>
+<h2 id="android">Android</h2>
+<p>Install once from the rolling release:</p>
+<p><strong><a href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest/download/AscentToTheStars.apk">AscentToTheStars.apk</a></strong></p>
+<p>After that, updates are automatic. The app checks on launch and resume, downloads in the background, and offers the installer when ready. Content-only updates can also apply silently in place. Your save survives every update.</p>
+<h2 id="windows">Windows</h2>
+<p><strong><a href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest/download/AscentToTheStars-Setup.exe">AscentToTheStars-Setup.exe</a></strong> (an <code>.msi</code> is on the <a href="https://github.com/silvariasereneblossom/ascent-to-the-stars-releases/releases/latest">same release</a>). The install is small because it uses the OS webview instead of a bundled browser. On launch it pulls the latest game from the release mirror and falls back to its bundled copy offline. You essentially never need to reinstall.</p>
+<h2 id="browser">Browser</h2>
+<p>Download <a href="https://raw.githubusercontent.com/silvariasereneblossom/ascent-to-the-stars-releases/main/index.html">index.html</a> and open it, or host it anywhere static. The page checks for updates on its own and offers a reload when one lands.</p>
+<h2 id="saves">Saves</h2>
+<p>Saves live on the device (browser storage, or the app's private storage), with 5 slots plus the cross-life Soul. Browsers keep saves per web address, so the game at a different address starts empty.</p>
+<p><strong>Cloud Saves</strong> (Config tab) keep your slots in step across the browser, Android and Windows. Press <strong>Create a sync code</strong> on one device, then <strong>Use this code</strong> with the same code on the others. There is no account and nothing personal is stored; anyone with the code can change your cloud saves, so keep it private. Your settings (music, volume, toggles) stay on each device.</p>
+<ul><li>Syncing happens when the game opens, every few minutes, and when you leave it. <strong>Sync now</strong> forces one.</li><li>If the same slot was played on two devices since they last synced, the game asks which one to keep. It never overwrites one with the other on its own.</li><li><strong>Delete my cloud saves</strong> erases everything stored under the code, and the code itself.</li></ul>
+<p>Without the cloud, the Config tab still exports a save as text or a file (Cultivator Snapshot) for Load / Transfer a Save on another device.</p>
+<h2 id="if-an-update-seems-stuck">If an update seems stuck</h2>
+<p>Give it an hour. The app package build can trail a content release briefly. The Config tab's <strong>Check for Updates Now</strong> button forces a check and reports plainly what happened.</p>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Ascent to the Stars <span lang="zh-Hans">步步登天</span></p>
+    <ul>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/#download">Download</a></li>
+      <li><a href="/wiki/">Wiki</a></li>
+      <li><a href="/#credits">Credits</a></li>
+    </ul>
+    <p class="small">This page sets no cookies and runs no trackers.</p>
+  </div>
+</footer>
+</body>
+</html>

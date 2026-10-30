@@ -1,0 +1,76 @@
+/* Ascent to the Stars: wiki page styles. Source of truth: the game repo's tools/site/wiki.css,
+   copied to the org site's assets/ by tools/sitegen.js. Builds on the tokens in site.css. */
+
+.wiki-header { border-bottom: 1px solid var(--line); background: var(--bg-2); }
+.site-nav a[aria-current="page"] { color: var(--gold); }
+
+.wiki-layout {
+  display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+  padding-top: 1.5rem; padding-bottom: 4rem;
+}
+@media (min-width: 900px) {
+  .wiki-layout { grid-template-columns: 14rem minmax(0, 1fr); gap: 3rem; padding-top: 2.5rem; }
+}
+
+/* sidebar: a collapsible block on phones, a sticky column on wide screens */
+.wiki-nav details {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.2rem 1rem 0.6rem;
+}
+.wiki-nav summary { cursor: pointer; padding: 0.6rem 0; font-weight: 600; font-size: 0.95rem; }
+.wiki-nav ul { list-style: none; margin: 0 0 0.4rem; padding: 0; }
+.wiki-nav li a {
+  display: block; padding: 0.3rem 0.6rem; margin: 0 -0.6rem; border-radius: 8px;
+  color: var(--muted); text-decoration: none; font-size: 0.95rem;
+}
+.wiki-nav li a:hover { color: var(--gold); background: var(--surface-2); }
+.wiki-nav li a[aria-current="page"] { color: var(--gold); background: var(--surface-2); font-weight: 600; }
+.wiki-nav .wiki-nav-group {
+  margin: 0.8rem 0 0.2rem; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--jade); font-weight: 600;
+}
+.wiki-nav .wiki-nav-group span { text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 400; }
+@media (min-width: 900px) {
+  .wiki-nav { position: sticky; top: 1.5rem; align-self: start; max-height: calc(100vh - 3rem); overflow-y: auto; }
+}
+
+/* article */
+.wiki { min-width: 0; max-width: 50rem; }
+.wiki h1 {
+  margin: 0 0 1rem; font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.1;
+}
+.wiki h1 [lang], .wiki h2 [lang], .wiki h3 [lang] { color: var(--gold); font-size: 0.65em; letter-spacing: 0.12em; margin-left: 0.2rem; }
+.wiki h2 { margin: 2.4rem 0 0.7rem; font-size: clamp(1.4rem, 3.6vw, 1.75rem); scroll-margin-top: 1rem; }
+.wiki h3 { margin: 1.8rem 0 0.5rem; scroll-margin-top: 1rem; }
+.wiki p, .wiki li { color: var(--text); }
+.wiki ul, .wiki ol { padding-left: 1.4rem; margin: 0 0 1rem; }
+.wiki li { margin-bottom: 0.45rem; }
+.wiki li::marker { color: var(--gold); }
+.wiki hr { border: 0; border-top: 1px solid var(--line); margin: 2.4rem 0; }
+.wiki code {
+  font-size: 0.9em; background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 6px; padding: 0.05rem 0.35rem;
+}
+.wiki blockquote {
+  margin: 0 0 1.5rem; padding: 0.7rem 1rem;
+  background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--jade);
+  border-radius: 10px; color: var(--muted); font-size: 0.93rem;
+}
+.wiki blockquote p { margin: 0; color: inherit; }
+
+.table-wrap { overflow-x: auto; margin: 0 0 1.5rem; border: 1px solid var(--line); border-radius: 10px; }
+.wiki table { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+.wiki th, .wiki td { text-align: left; vertical-align: top; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--line); }
+.wiki th { background: var(--surface-2); font-weight: 600; white-space: nowrap; }
+.wiki td [lang] { white-space: nowrap; }
+.wiki tbody tr:last-child td { border-bottom: 0; }
+.wiki tbody tr:nth-child(even) td { background: var(--surface); }
+
+.wiki-toc {
+  margin: 0 0 1.5rem; padding: 0.2rem 1rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; font-size: 0.93rem;
+}
+.wiki-toc summary { cursor: pointer; padding: 0.55rem 0; font-weight: 600; }
+.wiki-toc ol { columns: 12rem; margin: 0 0 0.6rem; padding-left: 1.2rem; }
+.wiki-toc li { margin-bottom: 0.2rem; break-inside: avoid; }
